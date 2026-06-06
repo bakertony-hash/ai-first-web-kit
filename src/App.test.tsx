@@ -43,6 +43,13 @@ test("renders crawlable navigation links on the homepage", () => {
   }
 });
 
+it("injects structured JSON-LD metadata", () => {
+  renderAt("/");
+  const scripts = Array.from(document.querySelectorAll('script[type="application/ld+json"]'));
+  const parsed = scripts.map((script) => JSON.parse(script.textContent ?? "{}"));
+  expect(parsed.map((item) => item["@type"])).toEqual(["WebSite", "Organization", "FAQPage", "HowTo"]);
+});
+
 test.each([
   [
     "/patterns",

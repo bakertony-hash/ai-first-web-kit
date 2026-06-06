@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { Shell } from "./components/Shell";
+import { allJsonLd } from "./metadata/jsonLd";
 import { AgentGuidePage } from "./pages/AgentGuidePage";
 import { ContactPage } from "./pages/ContactPage";
 import { ExamplesPage } from "./pages/ExamplesPage";
@@ -33,5 +34,16 @@ function getPage(pathname: string): ReactNode {
 }
 
 export default function App() {
-  return <Shell>{getPage(window.location.pathname)}</Shell>;
+  return (
+    <>
+      {allJsonLd().map((item) => (
+        <script
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(item) }}
+          key={item["@type"]}
+          type="application/ld+json"
+        />
+      ))}
+      <Shell>{getPage(window.location.pathname)}</Shell>
+    </>
+  );
 }

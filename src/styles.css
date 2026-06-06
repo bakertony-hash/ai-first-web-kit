@@ -1,9 +1,283 @@
 :root {
-  font-family: system-ui, sans-serif;
-  color: #17211b;
-  background: #f6f8f4;
+  color: #18211d;
+  background: #f7f5ee;
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  font-synthesis: none;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+  --bg: #f7f5ee;
+  --surface: #fffdf7;
+  --surface-strong: #ece7d8;
+  --ink: #18211d;
+  --muted: #596159;
+  --line: #d8d0bd;
+  --accent: #7a4f2a;
+  --accent-strong: #23563f;
+  --focus: #b45f3c;
+  --max-width: 1180px;
+  --radius: 8px;
+  --shadow: 0 18px 45px rgb(33 31 24 / 10%);
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
+  min-width: 320px;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+a {
+  color: var(--accent-strong);
+  font-weight: 700;
+  text-decoration-color: rgb(35 86 63 / 35%);
+  text-underline-offset: 0.22em;
+}
+
+a:hover {
+  color: var(--accent);
+  text-decoration-color: currentcolor;
+}
+
+a:focus-visible {
+  border-radius: 4px;
+  outline: 3px solid rgb(180 95 60 / 42%);
+  outline-offset: 4px;
+}
+
+header,
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  width: min(100% - 2rem, var(--max-width));
+  margin: 0 auto;
+}
+
+header {
+  padding: 1.15rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+header > a {
+  color: var(--ink);
+  font-size: 0.95rem;
+  letter-spacing: 0;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.45rem 1rem;
+}
+
+nav a {
+  color: var(--muted);
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+main {
+  padding: 2.5rem 0 4rem;
+}
+
+footer {
+  padding: 1.5rem 0 2rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+footer p {
+  max-width: 62rem;
+  margin: 0;
+}
+
+.page,
+.section,
+.hero,
+main > h1,
+main > p,
+main > a,
+main > section,
+main > div {
+  width: min(100% - 2rem, var(--max-width));
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.section,
+main > section {
+  padding: 2.4rem 0;
+}
+
+.hero,
+main > section:first-child {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(18rem, 0.72fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: center;
+  padding: clamp(3rem, 7vw, 6rem) 0 clamp(2.6rem, 5vw, 4.5rem);
+}
+
+h1,
+h2,
+h3,
+p {
+  overflow-wrap: anywhere;
+}
+
+h1 {
+  max-width: 12ch;
+  margin: 0 0 1rem;
+  font-size: clamp(3rem, 9vw, 6.8rem);
+  line-height: 0.95;
+  letter-spacing: 0;
+}
+
+h2 {
+  margin: 0 0 1rem;
+  font-size: clamp(1.55rem, 3vw, 2.35rem);
+  line-height: 1.08;
+  letter-spacing: 0;
+}
+
+h3 {
+  margin: 0 0 0.65rem;
+  font-size: 1.05rem;
+  line-height: 1.25;
+  letter-spacing: 0;
+}
+
+p {
+  margin: 0 0 1rem;
+  color: var(--muted);
+}
+
+ul {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+li + li {
+  margin-top: 0.75rem;
+}
+
+.hero-panel,
+main > section:first-child aside {
+  padding: clamp(1.2rem, 3vw, 2rem);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.hero-panel ul,
+main > section:first-child aside ul {
+  display: grid;
+  gap: 0.85rem;
+  padding: 0;
+  list-style: none;
+}
+
+.hero-panel li,
+main > section:first-child aside li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.task-grid,
+.evidence-grid,
+.card-grid,
+main > section > div {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 1rem;
+}
+
+.task-card,
+.info-card,
+.contact-panel,
+.evidence-item,
+.faq-list article,
+main > section article,
+main > section:not(:first-child) li {
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+main > section:not(:first-child) ul {
+  display: grid;
+  gap: 0.85rem;
+  padding: 0;
+  list-style: none;
+}
+
+main > section:not(:first-child) li + li {
+  margin-top: 0;
+}
+
+main > section article p,
+main > section li p {
+  margin-bottom: 0;
+}
+
+main > h1 {
+  padding-top: clamp(2.4rem, 6vw, 5rem);
+}
+
+main > h1 + p {
+  max-width: 46rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.08rem;
+}
+
+main > h1 + p + section,
+main > h1 + p + div {
+  margin-top: 1rem;
+}
+
+@media (max-width: 760px) {
+  header,
+  footer {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  nav {
+    justify-content: flex-start;
+    gap: 0.65rem 0.9rem;
+  }
+
+  main {
+    padding-top: 1rem;
+  }
+
+  .hero,
+  main > section:first-child {
+    grid-template-columns: 1fr;
+    padding-top: 2.25rem;
+  }
+
+  h1 {
+    max-width: 10ch;
+  }
+
+  footer {
+    padding-bottom: 1.5rem;
+  }
 }
