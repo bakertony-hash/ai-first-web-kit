@@ -11,7 +11,45 @@
     <title>AI-First Web Kit</title>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <main>
+        <header>
+          <a href="/">AI-First Web Kit</a>
+          <nav aria-label="Primary navigation">
+            <a href="/">Overview</a>
+            <a href="/patterns">Patterns</a>
+            <a href="/agent-guide">Agent Guide</a>
+            <a href="/examples">Examples</a>
+            <a href="/contact">Contact</a>
+          </nav>
+        </header>
+        <section>
+          <h1>AI-First Web Kit</h1>
+          <p>
+            AI-First Web Kit is a working example of a website designed for humans and AI agents,
+            with clear content, crawlable routes, structured metadata, and machine-readable guidance.
+          </p>
+        </section>
+        <section aria-labelledby="fallback-agent-tasks">
+          <h2 id="fallback-agent-tasks">Agent Tasks</h2>
+          <ul>
+            <li>Summarize what this site offers.</li>
+            <li>Find the machine-readable guide.</li>
+            <li>Compare AI-first website patterns.</li>
+            <li>Contact the maintainer.</li>
+          </ul>
+        </section>
+        <section aria-labelledby="fallback-agent-assets">
+          <h2 id="fallback-agent-assets">Agent Evidence</h2>
+          <ul>
+            <li><a href="/llms.txt">llms.txt</a></li>
+            <li><a href="/ai-site-manifest.json">AI site manifest</a></li>
+            <li><a href="/robots.txt">Robots policy</a></li>
+            <li><a href="/sitemap.xml">Sitemap</a></li>
+          </ul>
+        </section>
+      </main>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
