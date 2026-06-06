@@ -111,12 +111,29 @@ Because the site is static, runtime failure modes are limited. The design should
 
 ## Testing and Verification
 
-Implementation should be verified with:
+The implementation should include a lightweight but explicit test strategy. Because this is a static Vite/React example, tests should focus on build integrity, route availability, metadata correctness, and the agent-facing contract.
 
-- `npm run build`
+Required verification commands:
+
+- `npm run build` to verify the production bundle.
+- `npm run test` for automated unit or integration checks.
 - Browser verification against the local dev server.
-- Direct checks that `/llms.txt`, `/ai-site-manifest.json`, `/robots.txt`, and `/sitemap.xml` resolve locally.
-- Page inspection for clear headings, visible links, readable layout, and no obvious overlap.
+
+Automated tests should cover:
+
+- Core content/config exports so the site name, canonical summary, primary routes, agent tasks, and contact details are present.
+- Metadata generation so JSON-LD includes `WebSite`, `Organization`, `FAQPage`, and `HowTo` data without contradicting visible content.
+- Static agent assets so `/llms.txt`, `/ai-site-manifest.json`, `/robots.txt`, and `/sitemap.xml` exist in the built output.
+- Internal route definitions so the human-facing pages listed in this spec remain discoverable.
+
+Browser verification should cover:
+
+- Home page renders with a clear `h1`, canonical summary, agent task list, evidence panel, and crawlable navigation links.
+- `/patterns`, `/agent-guide`, `/examples`, and `/contact` render without broken layout.
+- `/llms.txt`, `/ai-site-manifest.json`, `/robots.txt`, and `/sitemap.xml` resolve locally.
+- Page content remains readable at desktop and mobile viewport widths, with no obvious overlap or clipped controls.
+
+Manual inspection should check that headings, visible links, JSON-LD, and machine-readable files all describe the same site facts.
 
 ## Out of Scope
 
