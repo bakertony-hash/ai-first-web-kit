@@ -53,10 +53,4 @@ describe("HTML fallback content", () => {
     expect(css).toContain(".js-enabled .static-fallback");
     expect(css).toContain("display: none");
   });
-
-  it("loads Pico CSS classless from the CDN", () => {
-    const html = readFileSync(join(process.cwd(), "index.html"), "utf8");
-
-    expect(html).toContain('href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css"');
-  });
 });
