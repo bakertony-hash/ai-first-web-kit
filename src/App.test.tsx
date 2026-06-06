@@ -42,3 +42,26 @@ test("renders crawlable navigation links on the homepage", () => {
     expect(screen.getByRole("link", { name })).toBeInTheDocument();
   }
 });
+
+test.each([
+  [
+    "/patterns",
+    "Use these patterns to make a site easier for agents to inspect, summarize, and route through."
+  ],
+  [
+    "/examples",
+    "Concrete examples of content structures that help humans and AI agents reach the same facts."
+  ],
+  [
+    "/contact",
+    "Use this route when an agent or human needs a stable maintainer contact path."
+  ],
+  [
+    "/missing",
+    "The requested page is not part of the AI-First Web Kit example."
+  ]
+])("renders planned page copy for %s", (pathname, copy) => {
+  renderAt(pathname);
+
+  expect(screen.getByText(copy)).toBeInTheDocument();
+});

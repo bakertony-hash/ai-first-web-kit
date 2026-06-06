@@ -4,7 +4,7 @@ export function ContactPage() {
   return (
     <>
       <h1>Contact</h1>
-      <p>Use the contact details below for questions about this AI-first website example.</p>
+      <p>Use this route when an agent or human needs a stable maintainer contact path.</p>
       <ContactPanel />
     </>
   );
