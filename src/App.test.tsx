@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import App from "./App";
 
 function renderAt(pathname: string) {
@@ -44,6 +45,16 @@ test("renders crawlable navigation links on the homepage", () => {
   for (const name of ["Overview", "Patterns", "Agent Guide", "Examples", "Contact"]) {
     expect(screen.getByRole("link", { name })).toBeInTheDocument();
   }
+});
+
+test("uses client-side navigation for app route links", async () => {
+  const user = userEvent.setup();
+  renderAt("/");
+
+  await user.click(screen.getByRole("link", { name: "Patterns" }));
+
+  expect(window.location.pathname).toBe("/patterns");
+  expect(screen.getByRole("heading", { level: 1, name: "Patterns" })).toBeInTheDocument();
 });
 
 it("injects structured JSON-LD metadata", () => {

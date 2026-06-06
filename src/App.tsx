@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import { Shell } from "./components/Shell";
 import { allJsonLd } from "./metadata/jsonLd";
@@ -34,6 +35,35 @@ function getPage(pathname: string): ReactNode {
 }
 
 export default function App() {
+  const [pathname, setPathname] = useState(() => window.location.pathname);
+
+  useEffect(() => {
+    function handlePopState() {
+      setPathname(window.location.pathname);
+    }
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
+
+  function handleNavigate(path: string) {
+    const nextPath = normalizePath(path);
+    if (nextPath !== normalizePath(window.location.pathname)) {
+      window.history.pushState({}, "", nextPath);
+    }
+
+    setPathname(nextPath);
+    if (window.navigator.userAgent.includes("jsdom")) {
+      return;
+    }
+
+    try {
+      window.scrollTo({ top: 0 });
+    } catch {
+      // Some non-browser test environments expose scrollTo without implementing it.
+    }
+  }
+
   return (
     <>
       {allJsonLd().map((item) => (
@@ -43,7 +73,7 @@ export default function App() {
           type="application/ld+json"
         />
       ))}
-      <Shell>{getPage(window.location.pathname)}</Shell>
+      <Shell onNavigate={handleNavigate}>{getPage(pathname)}</Shell>
     </>
   );
 }
