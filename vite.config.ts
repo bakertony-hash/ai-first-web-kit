@@ -3,6 +3,9 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [react()],
+  server: {
+    allowedHosts: ["host.docker.internal"]
+  },
   test: {
     environment: "jsdom",
     globals: true,
