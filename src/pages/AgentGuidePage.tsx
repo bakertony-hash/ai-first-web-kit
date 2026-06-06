@@ -1,29 +1,52 @@
+import { BriefcaseBusiness, ChevronRight, Download, FileText } from "lucide-react";
 import { agentAssets, agentTasks, site } from "../content/siteContent";
 
 export function AgentGuidePage() {
   return (
-    <>
-      <h1>Agent Guide</h1>
-      <p>{site.canonicalSummary}</p>
-      <section aria-labelledby="recommended-tasks-heading">
-        <h2 id="recommended-tasks-heading">Recommended Tasks</h2>
-        <ul>
-          {agentTasks.map((task) => (
-            <li key={task}>{task}</li>
-          ))}
-        </ul>
+    <div className="subpage">
+      <section className="subpage-intro" aria-labelledby="agent-guide-heading">
+        <h1 id="agent-guide-heading">Agent Guide</h1>
+        <p>{site.canonicalSummary}</p>
       </section>
-      <section aria-labelledby="machine-readable-assets-heading">
-        <h2 id="machine-readable-assets-heading">Machine-Readable Assets</h2>
-        <ul>
-          {agentAssets.map((asset) => (
-            <li key={asset.path}>
-              <a href={asset.path}>{asset.label}</a>
-              <p>{asset.description}</p>
-            </li>
-          ))}
-        </ul>
-      </section>
-    </>
+      <div className="subpage-grid">
+        <section className="page-panel" aria-labelledby="recommended-tasks-heading">
+          <div className="panel-heading">
+            <span className="icon-tile" aria-hidden="true">
+              <BriefcaseBusiness size={24} />
+            </span>
+            <h2 id="recommended-tasks-heading">Recommended Tasks</h2>
+          </div>
+          <ul className="task-list">
+            {agentTasks.map((task) => (
+              <li key={task}>
+                <span>{task}</span>
+                <ChevronRight aria-hidden="true" size={18} />
+              </li>
+            ))}
+          </ul>
+        </section>
+        <section className="page-panel" aria-labelledby="machine-readable-assets-heading">
+          <div className="panel-heading">
+            <span className="icon-tile" aria-hidden="true">
+              <FileText size={24} />
+            </span>
+            <h2 id="machine-readable-assets-heading">Machine-Readable Assets</h2>
+          </div>
+          <ul className="evidence-list">
+            {agentAssets.map((asset) => (
+              <li key={asset.path}>
+                <a href={asset.path}>
+                  <span>
+                    <strong>{asset.label}</strong>
+                    <small>{asset.description}</small>
+                  </span>
+                  <Download aria-hidden="true" size={16} />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </div>
+    </div>
   );
 }

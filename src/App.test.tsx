@@ -28,6 +28,23 @@ test("renders the homepage summary, agent tasks, and agent evidence", () => {
   ).toBeInTheDocument();
 });
 
+test("renders homepage reskin landmarks and primary actions", () => {
+  renderAt("/");
+
+  expect(document.querySelector(".hero")).toBeInTheDocument();
+  expect(document.querySelector(".signal-map")).toBeInTheDocument();
+  expect(document.querySelector(".feature-strip")).toBeInTheDocument();
+  expect(document.querySelector(".workbench")).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: /read the guide/i })).toHaveAttribute(
+    "href",
+    "/agent-guide"
+  );
+  expect(screen.getByRole("link", { name: /view patterns/i })).toHaveAttribute(
+    "href",
+    "/patterns"
+  );
+});
+
 test.each([
   ["/patterns", "Patterns"],
   ["/agent-guide", "Agent Guide"],
@@ -89,4 +106,16 @@ test.each([
   renderAt(pathname);
 
   expect(screen.getByText(copy)).toBeInTheDocument();
+});
+
+test.each([
+  ["/agent-guide", "Agent Guide"],
+  ["/contact", "Contact"]
+])("applies the subpage skin to %s", (pathname, heading) => {
+  renderAt(pathname);
+
+  expect(document.querySelector(".subpage")).toBeInTheDocument();
+  expect(document.querySelector(".subpage-intro")).toBeInTheDocument();
+  expect(screen.getByRole("heading", { level: 1, name: heading })).toBeInTheDocument();
+  expect(document.querySelector(".page-panel")).toBeInTheDocument();
 });

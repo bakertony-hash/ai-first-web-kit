@@ -73,7 +73,9 @@ export default function App() {
           type="application/ld+json"
         />
       ))}
-      <Shell onNavigate={handleNavigate}>{getPage(pathname)}</Shell>
+      <Shell onNavigate={handleNavigate} pathname={normalizePath(pathname)}>
+        {getPage(pathname)}
+      </Shell>
     </>
   );
 }
