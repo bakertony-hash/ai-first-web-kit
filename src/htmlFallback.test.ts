@@ -42,4 +42,15 @@ describe("HTML fallback content", () => {
       expect(html).toContain(fragment);
     }
   });
+
+  it("hides the fallback immediately when JavaScript is available", () => {
+    const html = readFileSync(join(process.cwd(), "index.html"), "utf8");
+    const css = readFileSync(join(process.cwd(), "src", "styles.css"), "utf8");
+
+    expect(html).toContain('document.documentElement.classList.add("js-enabled")');
+    expect(html).toContain(".js-enabled .static-fallback {");
+    expect(html).toContain('<main class="static-fallback">');
+    expect(css).toContain(".js-enabled .static-fallback");
+    expect(css).toContain("display: none");
+  });
 });

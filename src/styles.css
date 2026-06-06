@@ -26,6 +26,10 @@
   box-sizing: border-box;
 }
 
+.js-enabled .static-fallback {
+  display: none;
+}
+
 body {
   margin: 0;
   min-width: 320px;

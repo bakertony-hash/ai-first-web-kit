@@ -8,11 +8,19 @@
       content="AI-First Web Kit is a working example of a website designed for both humans and AI agents."
     />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <style>
+      .js-enabled .static-fallback {
+        display: none;
+      }
+    </style>
+    <script>
+      document.documentElement.classList.add("js-enabled");
+    </script>
     <title>AI-First Web Kit</title>
   </head>
   <body>
     <div id="root">
-      <main>
+      <main class="static-fallback">
         <header>
           <a href="/">AI-First Web Kit</a>
           <nav aria-label="Primary navigation">
