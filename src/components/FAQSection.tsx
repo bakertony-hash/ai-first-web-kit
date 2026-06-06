@@ -1,4 +1,3 @@
-import { ChevronDown } from "lucide-react";
 import { faqItems } from "../content/siteContent";
 
 export function FAQSection() {
@@ -12,7 +11,6 @@ export function FAQSection() {
               <h3>{item.question}</h3>
               <p>{item.answer}</p>
             </div>
-            <ChevronDown aria-hidden="true" size={18} />
           </article>
         ))}
       </div>

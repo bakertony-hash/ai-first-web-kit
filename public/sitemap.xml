@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://example.com/</loc></url>
-  <url><loc>https://example.com/patterns</loc></url>
-  <url><loc>https://example.com/agent-guide</loc></url>
-  <url><loc>https://example.com/examples</loc></url>
-  <url><loc>https://example.com/contact</loc></url>
-  <url><loc>https://example.com/llms.txt</loc></url>
-  <url><loc>https://example.com/ai-site-manifest.json</loc></url>
+  <url><loc>https://ai-first-web-kit.vercel.app/</loc></url>
+  <url><loc>https://ai-first-web-kit.vercel.app/patterns</loc></url>
+  <url><loc>https://ai-first-web-kit.vercel.app/agent-guide</loc></url>
+  <url><loc>https://ai-first-web-kit.vercel.app/examples</loc></url>
+  <url><loc>https://ai-first-web-kit.vercel.app/contact</loc></url>
+  <url><loc>https://ai-first-web-kit.vercel.app/llms.txt</loc></url>
+  <url><loc>https://ai-first-web-kit.vercel.app/ai-site-manifest.json</loc></url>
 </urlset>

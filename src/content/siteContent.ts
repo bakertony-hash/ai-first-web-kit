@@ -1,6 +1,6 @@
 export const site = {
   name: "AI-First Web Kit",
-  url: "https://example.com",
+  url: "https://ai-first-web-kit.vercel.app",
   canonicalSummary:
     "AI-First Web Kit is a working example of a website designed for humans and AI agents, with clear content, crawlable routes, structured metadata, and machine-readable guidance.",
   audience: ["Human visitors", "AI agents", "Developers"],

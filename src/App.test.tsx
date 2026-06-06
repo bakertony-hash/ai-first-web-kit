@@ -28,6 +28,18 @@ test("renders the homepage summary, agent tasks, and agent evidence", () => {
   ).toBeInTheDocument();
 });
 
+test("renders agent task rows without expandable affordance icons", () => {
+  const { container } = renderAt("/agent-guide");
+
+  expect(container.querySelector(".task-list .lucide-chevron-right")).not.toBeInTheDocument();
+});
+
+test("renders FAQ answers without expandable affordance icons", () => {
+  const { container } = renderAt("/");
+
+  expect(container.querySelector(".faq-list .lucide-chevron-down")).not.toBeInTheDocument();
+});
+
 test("renders homepage reskin landmarks and primary actions", () => {
   renderAt("/");
 

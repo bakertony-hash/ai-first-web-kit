@@ -15,12 +15,17 @@ describe("agent-facing static assets", () => {
   it("publishes a parseable AI site manifest", () => {
     const manifest = JSON.parse(readFileSync(publicPath("ai-site-manifest.json"), "utf8"));
     expect(manifest.name).toBe("AI-First Web Kit");
+    expect(manifest.url).toBe("https://ai-first-web-kit.vercel.app");
     expect(manifest.routes.map((route: { path: string }) => route.path)).toContain("/contact");
   });
 
   it("publishes robots and sitemap files", () => {
-    expect(readFileSync(publicPath("robots.txt"), "utf8")).toContain("Sitemap: https://example.com/sitemap.xml");
-    expect(readFileSync(publicPath("sitemap.xml"), "utf8")).toContain("<loc>https://example.com/patterns</loc>");
+    expect(readFileSync(publicPath("robots.txt"), "utf8")).toContain(
+      "Sitemap: https://ai-first-web-kit.vercel.app/sitemap.xml"
+    );
+    expect(readFileSync(publicPath("sitemap.xml"), "utf8")).toContain(
+      "<loc>https://ai-first-web-kit.vercel.app/patterns</loc>"
+    );
   });
 
   it("keeps all expected asset files present", () => {

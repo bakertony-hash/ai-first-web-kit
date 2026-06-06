@@ -1,4 +1,4 @@
-import { BriefcaseBusiness, ChevronRight, Download, FileText } from "lucide-react";
+import { BriefcaseBusiness, Download, FileText } from "lucide-react";
 import { agentAssets, agentTasks, site } from "../content/siteContent";
 
 export function AgentGuidePage() {
@@ -20,7 +20,6 @@ export function AgentGuidePage() {
             {agentTasks.map((task) => (
               <li key={task}>
                 <span>{task}</span>
-                <ChevronRight aria-hidden="true" size={18} />
               </li>
             ))}
           </ul>

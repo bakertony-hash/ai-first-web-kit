@@ -4,7 +4,7 @@ import { agentAssets, agentTasks, contact, examples, faqItems, patterns, routes,
 describe("site content contract", () => {
   it("defines the canonical identity and summary", () => {
     expect(site.name).toBe("AI-First Web Kit");
-    expect(site.url).toBe("https://example.com");
+    expect(site.url).toBe("https://ai-first-web-kit.vercel.app");
     expect(site.canonicalSummary).toContain("working example");
     expect(site.canonicalSummary).toContain("humans");
     expect(site.canonicalSummary).toContain("AI agents");

@@ -1,4 +1,4 @@
-import { BriefcaseBusiness, ChevronRight } from "lucide-react";
+import { BriefcaseBusiness } from "lucide-react";
 import { agentTasks } from "../content/siteContent";
 
 export function AgentTaskList() {
@@ -14,7 +14,6 @@ export function AgentTaskList() {
         {agentTasks.map((task) => (
           <li key={task}>
             <span>{task}</span>
-            <ChevronRight aria-hidden="true" size={18} />
           </li>
         ))}
       </ul>

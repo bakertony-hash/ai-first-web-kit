@@ -30,6 +30,12 @@ describe("HTML fallback content", () => {
     }
   });
 
+  it("declares the production canonical URL", () => {
+    const html = readFileSync(join(process.cwd(), "index.html"), "utf8");
+
+    expect(html).toContain('<link rel="canonical" href="https://ai-first-web-kit.vercel.app/" />');
+  });
+
   it("keeps fallback content in the built HTML when dist is present", () => {
     const distIndex = join(process.cwd(), "dist", "index.html");
     if (!existsSync(distIndex)) {
