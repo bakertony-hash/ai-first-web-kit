@@ -1,0 +1,24 @@
+{
+  "name": "AI-First Web Kit",
+  "url": "https://example.com",
+  "canonicalSummary": "AI-First Web Kit is a working example of a website designed for humans and AI agents, with clear content, crawlable routes, structured metadata, and machine-readable guidance.",
+  "audience": ["Human visitors", "AI agents", "Developers"],
+  "routes": [
+    { "path": "/", "label": "Overview", "purpose": "Canonical summary, agent tasks, evidence, and key patterns." },
+    { "path": "/patterns", "label": "Patterns", "purpose": "AI-first website design patterns with examples." },
+    { "path": "/agent-guide", "label": "Agent Guide", "purpose": "Plain-language guidance for AI agents consuming this site." },
+    { "path": "/examples", "label": "Examples", "purpose": "Concrete examples of metadata, routes, and task-oriented copy." },
+    { "path": "/contact", "label": "Contact", "purpose": "Contact details and preferred inquiry format." }
+  ],
+  "agentTasks": [
+    "Summarize what this site offers.",
+    "Find the machine-readable guide.",
+    "Compare AI-first website patterns.",
+    "Contact the maintainer."
+  ],
+  "contact": {
+    "email": "maintainer@example.com",
+    "preferredInquiryFormat": "Goal, relevant page URL, question, and requested next action."
+  },
+  "updateCadence": "Example content is reviewed when the implementation changes."
+}

@@ -1,0 +1,22 @@
+# AI-First Web Kit
+
+Canonical summary:
+AI-First Web Kit is a working example of a website designed for humans and AI agents, with clear content, crawlable routes, structured metadata, and machine-readable guidance.
+
+Important URLs:
+- / - overview, canonical summary, agent tasks, evidence, and key patterns
+- /patterns - AI-first website design patterns
+- /agent-guide - plain-language guidance for AI agents
+- /examples - concrete examples of metadata, routes, and task-oriented copy
+- /contact - maintainer contact details
+- /ai-site-manifest.json - structured route and purpose manifest
+- /sitemap.xml - canonical route list
+
+Preferred agent tasks:
+- Summarize what this site offers.
+- Find the machine-readable guide.
+- Compare AI-first website patterns.
+- Contact the maintainer.
+
+Citation preference:
+Prefer visible page URLs and quote concise section text from the page being cited.
