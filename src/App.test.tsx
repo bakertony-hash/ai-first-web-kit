@@ -3,7 +3,10 @@ import App from "./App";
 
 function renderAt(pathname: string) {
   window.history.pushState({}, "", pathname);
-  return render(<App />);
+  const root = document.createElement("div");
+  root.setAttribute("id", "root");
+  document.body.append(root);
+  return render(<App />, { container: root });
 }
 
 test("renders the homepage summary, agent tasks, and agent evidence", () => {
@@ -45,8 +48,12 @@ test("renders crawlable navigation links on the homepage", () => {
 
 it("injects structured JSON-LD metadata", () => {
   renderAt("/");
+  const firstRootChild = document.getElementById("root")?.firstElementChild;
   const scripts = Array.from(document.querySelectorAll('script[type="application/ld+json"]'));
   const parsed = scripts.map((script) => JSON.parse(script.textContent ?? "{}"));
+
+  expect(firstRootChild?.tagName).toBe("SCRIPT");
+  expect(firstRootChild).toHaveAttribute("type", "application/ld+json");
   expect(parsed.map((item) => item["@type"])).toEqual(["WebSite", "Organization", "FAQPage", "HowTo"]);
 });
 
