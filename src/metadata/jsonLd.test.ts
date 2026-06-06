@@ -27,13 +27,17 @@ describe("JSON-LD builders", () => {
 
   it("builds FAQPage JSON-LD from visible FAQ items", () => {
     const jsonLd = buildFaqJsonLd();
+    expect(jsonLd["@context"]).toBe("https://schema.org");
     expect(jsonLd["@type"]).toBe("FAQPage");
+    expect(jsonLd.mainEntity.every((entry) => entry["@type"] === "Question")).toBe(true);
     expect(jsonLd.mainEntity.map((entry) => entry.name)).toEqual(faqItems.map((item) => item.question));
+    expect(jsonLd.mainEntity.every((entry) => entry.acceptedAnswer["@type"] === "Answer")).toBe(true);
     expect(jsonLd.mainEntity.map((entry) => entry.acceptedAnswer.text)).toEqual(faqItems.map((item) => item.answer));
   });
 
   it("builds HowTo JSON-LD for AI-first site consumption", () => {
     const jsonLd = buildHowToJsonLd();
+    expect(jsonLd["@context"]).toBe("https://schema.org");
     expect(jsonLd["@type"]).toBe("HowTo");
     expect(jsonLd.step.map((step) => step.name)).toEqual([
       "Read the canonical summary",
