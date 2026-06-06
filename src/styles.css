@@ -244,7 +244,6 @@ main > h1 {
 }
 
 main > h1 + p {
-  max-width: 46rem;
   margin-bottom: 1.5rem;
   font-size: 1.08rem;
 }
