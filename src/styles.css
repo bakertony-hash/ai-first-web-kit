@@ -126,8 +126,7 @@ main > section {
   padding: 2.4rem 0;
 }
 
-.hero,
-main > section:first-child {
+.hero {
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(18rem, 0.72fr);
   gap: clamp(1.5rem, 4vw, 4rem);
@@ -143,11 +142,14 @@ p {
 }
 
 h1 {
-  max-width: 12ch;
   margin: 0 0 1rem;
   font-size: clamp(3rem, 9vw, 6.8rem);
   line-height: 0.95;
   letter-spacing: 0;
+}
+
+.hero h1 {
+  max-width: 12ch;
 }
 
 h2 {
@@ -178,8 +180,7 @@ li + li {
   margin-top: 0.75rem;
 }
 
-.hero-panel,
-main > section:first-child aside {
+.hero-panel {
   padding: clamp(1.2rem, 3vw, 2rem);
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -187,16 +188,14 @@ main > section:first-child aside {
   box-shadow: var(--shadow);
 }
 
-.hero-panel ul,
-main > section:first-child aside ul {
+.hero-panel ul {
   display: grid;
   gap: 0.85rem;
   padding: 0;
   list-style: none;
 }
 
-.hero-panel li,
-main > section:first-child aside li {
+.hero-panel li {
   display: flex;
   align-items: flex-start;
   gap: 0.6rem;
@@ -272,13 +271,12 @@ main > h1 + p + div {
     padding-top: 1rem;
   }
 
-  .hero,
-  main > section:first-child {
+  .hero {
     grid-template-columns: 1fr;
     padding-top: 2.25rem;
   }
 
-  h1 {
+  .hero h1 {
     max-width: 10ch;
   }
 
