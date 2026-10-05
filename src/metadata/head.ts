@@ -1,4 +1,4 @@
-import { site } from "../content/siteContent";
+import { markdownPathFor, site } from "../content/siteContent";
 import type { PageMeta } from "../content/siteContent";
 
 function escapeHtml(value: string): string {
@@ -20,6 +20,7 @@ export function renderHead(page: PageMeta, isNotFound = false): string {
     const url = canonicalUrl(page.path);
     tags.push(
       `<link rel="canonical" href="${url}" />`,
+      `<link rel="alternate" type="text/markdown" href="${markdownPathFor(page.path)}" />`,
       `<meta property="og:type" content="website" />`,
       `<meta property="og:site_name" content="${escapeHtml(site.name)}" />`,
       `<meta property="og:title" content="${title}" />`,

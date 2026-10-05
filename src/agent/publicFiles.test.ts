@@ -1,19 +1,23 @@
 import { describe, expect, it } from "vitest";
-import { routes, site } from "../content/siteContent";
+import { markdownPathFor, routes, site } from "../content/siteContent";
 import { buildLlmsTxt, buildSitemap } from "./publicFiles";
 
 describe("llms.txt", () => {
   const llms = buildLlmsTxt();
-  const links = [...llms.matchAll(/^- \[(.+?)\]\((.+?)\): .+$/gm)].map((match) => match[2]);
+  const pagesSection = llms.split("## Pages")[1].split("## Optional")[0];
+  const links = [...pagesSection.matchAll(/^- \[(.+?)\]\((.+?)\): .+$/gm)].map((match) => match[2]);
 
   it("follows the spec: H1, blockquote summary, then link lists", () => {
     expect(llms.startsWith(`# ${site.name}\n\n> `)).toBe(true);
     expect(llms).toMatch(/^## Pages$/m);
   });
 
-  it("links every route with an absolute URL", () => {
-    expect(links).toHaveLength(routes.length);
-    expect(links.every((link) => link.startsWith(`${site.url}/`))).toBe(true);
+  it("links every route's Markdown version with an absolute URL", () => {
+    expect(links).toEqual(routes.map((route) => `${site.url}${markdownPathFor(route.path)}`));
+  });
+
+  it("links llms-full.txt in the Optional section", () => {
+    expect(llms.split("## Optional")[1]).toContain(`(${site.url}/llms-full.txt)`);
   });
 });
 

@@ -6,7 +6,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const distDir = join(root, "dist");
 const serverDir = join(root, "dist-server");
 
-const { renderRoute, routePaths, notFoundPath, buildLlmsTxt, buildSitemap } = await import(join(serverDir, "entry-server.js"));
+const { renderRoute, routePaths, notFoundPath, buildPublicFiles } = await import(join(serverDir, "entry-server.js"));
 const template = await readFile(join(distDir, "index.html"), "utf8");
 
 function htmlFileFor(path) {
@@ -30,8 +30,9 @@ for (const path of [...routePaths, notFoundPath]) {
   written.push(await emit(htmlFileFor(path), page));
 }
 
-written.push(await emit("llms.txt", buildLlmsTxt()));
-written.push(await emit("sitemap.xml", buildSitemap()));
+for (const [file, contents] of Object.entries(buildPublicFiles())) {
+  written.push(await emit(file, contents));
+}
 
 await rm(serverDir, { recursive: true, force: true });
 console.log(`Prerendered ${written.length} files: ${written.join(", ")}`);

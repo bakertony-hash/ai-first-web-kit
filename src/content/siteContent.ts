@@ -419,3 +419,7 @@ export const machineInterfaces = [
   { path: "/sitemap.xml", label: "Sitemap", description: "The canonical list of page URLs." },
   { path: "/robots.txt", label: "Robots policy", description: "Crawler policy and sitemap location." }
 ] as const;
+
+export function markdownPathFor(path: string): string {
+  return path === "/" ? "/index.md" : `${path}.md`;
+}

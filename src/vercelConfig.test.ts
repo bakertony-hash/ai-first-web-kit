@@ -20,13 +20,17 @@ describe("Vercel deployment config", () => {
     expect(config.redirects).toEqual(
       expect.arrayContaining([
         { source: "/agent-guide", destination: "/interfaces", permanent: true },
-        { source: "/examples", destination: "/patterns", permanent: true }
+        { source: "/agent-guide.md", destination: "/interfaces.md", permanent: true },
+        { source: "/examples", destination: "/patterns", permanent: true },
+        { source: "/examples.md", destination: "/patterns.md", permanent: true }
       ])
     );
   });
 
   it.each([
+    ["/(.*)\\.md", "text/markdown;charset=UTF-8"],
     ["/llms.txt", "text/plain;charset=UTF-8"],
+    ["/llms-full.txt", "text/plain;charset=UTF-8"],
     ["/robots.txt", "text/plain;charset=UTF-8"],
     ["/sitemap.xml", "application/xml;charset=UTF-8"]
   ])("serves %s as %s without noindex or noai", (source, contentType) => {

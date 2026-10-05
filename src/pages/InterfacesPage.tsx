@@ -1,4 +1,4 @@
-import { routes, site, webmcpTools } from "../content/siteContent";
+import { markdownPathFor, routes, site, webmcpTools } from "../content/siteContent";
 
 const tools = Object.values(webmcpTools);
 
@@ -25,9 +25,7 @@ export function InterfacesPage() {
         <ul>
           {routes.map((route) => (
             <li key={route.path}>
-              <a href={route.path === "/" ? "/index.md" : `${route.path}.md`}>
-                {route.path === "/" ? "/index.md" : `${route.path}.md`}
-              </a>
+              <a href={markdownPathFor(route.path)}>{markdownPathFor(route.path)}</a>
               : {route.label}
             </li>
           ))}
@@ -80,38 +78,25 @@ export function InterfacesPage() {
           Two forms are annotated with the declarative WebMCP API, so browsers that support it expose them to agents as
           tools. In other browsers they are ordinary forms.
         </p>
-        <table>
-          <caption className="visually-hidden">WebMCP tools on this site</caption>
-          <thead>
-            <tr>
-              <th scope="col">Tool</th>
-              <th scope="col">Page</th>
-              <th scope="col">Parameters</th>
-              <th scope="col">Submits automatically</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tools.map((tool) => (
-              <tr key={tool.name}>
-                <th scope="row">
-                  <code>{tool.name}</code>
-                  <p>{tool.description}</p>
-                </th>
-                <td>
-                  <a href={tool.page}>{tool.page}</a>
-                </td>
-                <td>
-                  {tool.params.map((param) => (
-                    <p key={param.name}>
-                      <code>{param.name}</code>: {param.description}
-                    </p>
-                  ))}
-                </td>
-                <td>{tool.autoSubmit ? "Yes, it is read-only" : "No, a person submits it"}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        {tools.map((tool) => (
+          <article className="tool" key={tool.name}>
+            <h3>
+              <code>{tool.name}</code>
+            </h3>
+            <p>{tool.description}</p>
+            <ul>
+              <li>
+                Form on <a href={tool.page}>{tool.page}</a>
+              </li>
+              <li>{tool.autoSubmit ? "Submits automatically, because it is read-only" : "A person submits it"}</li>
+              {tool.params.map((param) => (
+                <li key={param.name}>
+                  Parameter <code>{param.name}</code>: {param.description}
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
       </section>
     </div>
   );

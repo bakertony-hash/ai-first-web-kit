@@ -747,36 +747,3 @@ code {
   font-size: 0.9em;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.9rem;
-}
-
-th,
-td {
-  padding: 0.6rem;
-  border-bottom: 1px solid var(--line);
-  text-align: left;
-  vertical-align: top;
-}
-
-th p,
-td p {
-  margin: 0.25rem 0 0;
-}
-
-@media (max-width: 640px) {
-  table,
-thead,
-tbody,
-tr,
-th,
-td {
-    display: block;
-  }
-
-  thead {
-    display: none;
-  }
-}

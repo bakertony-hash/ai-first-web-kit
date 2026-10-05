@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { notFoundPath, renderRoute, routePaths } from "./entry-server";
-import { routes, site } from "./content/siteContent";
+import { buildPublicFiles, notFoundPath, renderRoute, routePaths } from "./entry-server";
+import { markdownPathFor, routes, site } from "./content/siteContent";
 
 function parse(html: string) {
   return new DOMParser().parseFromString(`<!doctype html><html><head></head><body>${html}</body></html>`, "text/html");
@@ -37,5 +37,28 @@ describe("prerendered routes", () => {
 
   it("treats a trailing slash as the same route", () => {
     expect(renderRoute("/patterns/").head).toEqual(renderRoute("/patterns").head);
+  });
+
+  it.each(routes.map((route) => [route.path] as const))("renders %s as Markdown with the same h1", (path) => {
+    const { html, head, markdown } = renderRoute(path);
+    const h1 = parse(html).querySelector("h1")?.textContent;
+
+    expect(markdown).toMatch(/^---\ntitle: /);
+    expect(markdown).toContain(`\n# ${h1}\n`);
+    expect(markdown).not.toMatch(/<svg|lucide|<script/);
+    expect(head).toContain(`<link rel="alternate" type="text/markdown" href="${markdownPathFor(path)}" />`);
+  });
+
+  it("makes site links in Markdown absolute", () => {
+    expect(renderRoute("/").markdown).toContain(`](${site.url}/patterns)`);
+  });
+
+  it("emits a .md file per route plus llms.txt, llms-full.txt and sitemap.xml", () => {
+    const files = buildPublicFiles();
+
+    expect(Object.keys(files).sort()).toEqual(
+      [...routes.map((route) => markdownPathFor(route.path).slice(1)), "llms.txt", "llms-full.txt", "sitemap.xml"].sort()
+    );
+    expect(files["llms-full.txt"]).toContain("# Interfaces");
   });
 });

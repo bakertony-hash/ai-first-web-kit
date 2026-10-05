@@ -4,7 +4,29 @@
   "trailingSlash": false,
   "headers": [
     {
+      "source": "/(.*)\\.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown;charset=UTF-8"
+        }
+      ]
+    },
+    {
       "source": "/llms.txt",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain;charset=UTF-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "index, follow"
+        }
+      ]
+    },
+    {
+      "source": "/llms-full.txt",
       "headers": [
         {
           "key": "Content-Type",
@@ -50,8 +72,18 @@
       "permanent": true
     },
     {
+      "source": "/agent-guide.md",
+      "destination": "/interfaces.md",
+      "permanent": true
+    },
+    {
       "source": "/examples",
       "destination": "/patterns",
+      "permanent": true
+    },
+    {
+      "source": "/examples.md",
+      "destination": "/patterns.md",
       "permanent": true
     }
   ]
