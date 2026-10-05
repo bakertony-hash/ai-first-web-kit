@@ -1,121 +1,43 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import App from "./App";
 
 function renderAt(pathname: string) {
-  const root = document.createElement("div");
-  root.setAttribute("id", "root");
-  document.body.append(root);
-  return render(<App pathname={pathname} />, { container: root });
+  return render(<App pathname={pathname} />);
 }
 
-test("renders the homepage summary, agent tasks, and agent evidence", () => {
-  renderAt("/");
-
-  expect(
-    screen.getByRole("heading", { level: 1, name: "AI-First Web Kit" })
-  ).toBeInTheDocument();
-  expect(
-    screen.getAllByText(/working example of a website designed for humans and AI agents/i)
-      .length
-  ).toBeGreaterThan(0);
-  expect(
-    screen.getByRole("heading", { level: 2, name: "Agent Tasks" })
-  ).toBeInTheDocument();
-  expect(
-    screen.getByRole("heading", { level: 2, name: "Agent Evidence" })
-  ).toBeInTheDocument();
-});
-
-test("renders agent task rows without expandable affordance icons", () => {
-  const { container } = renderAt("/agent-guide");
-
-  expect(container.querySelector(".task-list .lucide-chevron-right")).not.toBeInTheDocument();
-});
-
-test("renders FAQ answers without expandable affordance icons", () => {
-  const { container } = renderAt("/");
-
-  expect(container.querySelector(".faq-list .lucide-chevron-down")).not.toBeInTheDocument();
-});
-
-test("renders homepage reskin landmarks and primary actions", () => {
-  renderAt("/");
-
-  expect(document.querySelector(".hero")).toBeInTheDocument();
-  expect(document.querySelector(".signal-map")).toBeInTheDocument();
-  expect(document.querySelector(".feature-strip")).toBeInTheDocument();
-  expect(document.querySelector(".workbench")).toBeInTheDocument();
-  expect(screen.getByRole("link", { name: /read the guide/i })).toHaveAttribute(
-    "href",
-    "/agent-guide"
-  );
-  expect(screen.getByRole("link", { name: /view patterns/i })).toHaveAttribute(
-    "href",
-    "/patterns"
-  );
-});
-
 test.each([
+  ["/", "AI-First Web Kit"],
   ["/patterns", "Patterns"],
-  ["/agent-guide", "Agent Guide"],
-  ["/examples", "Examples"],
-  ["/contact", "Contact"]
-])("renders %s with the expected h1", (pathname, heading) => {
+  ["/interfaces", "Interfaces"],
+  ["/evidence", "Evidence"],
+  ["/contact", "Contact"],
+  ["/missing", "Page Not Found"]
+])("renders %s with the h1 %s", (pathname, heading) => {
   renderAt(pathname);
 
   expect(screen.getByRole("heading", { level: 1, name: heading })).toBeInTheDocument();
 });
 
-test("renders crawlable navigation links on the homepage", () => {
-  renderAt("/");
+test("marks the current page in plain-link navigation", () => {
+  renderAt("/patterns");
+  const nav = screen.getByRole("navigation", { name: "Primary navigation" });
 
-  for (const name of ["Overview", "Patterns", "Agent Guide", "Examples", "Contact"]) {
-    expect(screen.getByRole("link", { name })).toBeInTheDocument();
+  for (const name of ["Overview", "Patterns", "Interfaces", "Evidence", "Contact"]) {
+    expect(within(nav).getByRole("link", { name })).toBeInTheDocument();
   }
+  expect(within(nav).getByRole("link", { name: "Patterns" })).toHaveAttribute("aria-current", "page");
 });
 
-it("injects structured JSON-LD metadata", () => {
+test("describes what visitors can do on the home page", () => {
   renderAt("/");
-  const firstRootChild = document.getElementById("root")?.firstElementChild;
-  const scripts = Array.from(document.querySelectorAll('script[type="application/ld+json"]'));
-  const parsed = scripts.map((script) => JSON.parse(script.textContent ?? "{}"));
 
-  expect(firstRootChild?.tagName).toBe("SCRIPT");
-  expect(firstRootChild).toHaveAttribute("type", "application/ld+json");
-  expect(parsed.map((item) => item["@type"])).toEqual(["WebSite", "Organization", "FAQPage", "HowTo"]);
+  expect(screen.getByRole("heading", { level: 2, name: "What you can do here" })).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: "Fetch any page as Markdown" })).toHaveAttribute("href", "/interfaces");
 });
 
-test.each([
-  [
-    "/patterns",
-    "Use these patterns to make a site easier for agents to inspect, summarize, and route through."
-  ],
-  [
-    "/examples",
-    "Concrete examples of content structures that help humans and AI agents reach the same facts."
-  ],
-  [
-    "/contact",
-    "Use this route when an agent or human needs a stable maintainer contact path."
-  ],
-  [
-    "/missing",
-    "The requested page is not part of the AI-First Web Kit example."
-  ]
-])("renders planned page copy for %s", (pathname, copy) => {
-  renderAt(pathname);
+test("gives each pattern a linkable anchor", () => {
+  const { container } = renderAt("/patterns");
 
-  expect(screen.getByText(copy)).toBeInTheDocument();
-});
-
-test.each([
-  ["/agent-guide", "Agent Guide"],
-  ["/contact", "Contact"]
-])("applies the subpage skin to %s", (pathname, heading) => {
-  renderAt(pathname);
-
-  expect(document.querySelector(".subpage")).toBeInTheDocument();
-  expect(document.querySelector(".subpage-intro")).toBeInTheDocument();
-  expect(screen.getByRole("heading", { level: 1, name: heading })).toBeInTheDocument();
-  expect(document.querySelector(".page-panel")).toBeInTheDocument();
+  expect(container.querySelector("#server-rendered-routes h3")).toHaveTextContent("Server-rendered HTML on every route");
+  expect(screen.getByRole("heading", { level: 2, name: "Retired patterns" })).toBeInTheDocument();
 });

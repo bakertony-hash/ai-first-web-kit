@@ -17,19 +17,6 @@
       ]
     },
     {
-      "source": "/ai-site-manifest.json",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "application/json;charset=UTF-8"
-        },
-        {
-          "key": "X-Robots-Tag",
-          "value": "index, follow"
-        }
-      ]
-    },
-    {
       "source": "/robots.txt",
       "headers": [
         {
@@ -54,6 +41,18 @@
           "value": "index, follow"
         }
       ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/agent-guide",
+      "destination": "/interfaces",
+      "permanent": true
+    },
+    {
+      "source": "/examples",
+      "destination": "/patterns",
+      "permanent": true
     }
   ]
 }

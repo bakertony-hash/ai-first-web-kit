@@ -1,51 +1,36 @@
 import { describe, expect, it } from "vitest";
-import { agentAssets, agentTasks, contact, examples, faqItems, patterns, routes, site } from "./siteContent";
+import { findRoute, layers, patterns, routes, webmcpTools } from "./siteContent";
 
-describe("site content contract", () => {
-  it("defines the canonical identity and summary", () => {
-    expect(site.name).toBe("AI-First Web Kit");
-    expect(site.url).toBe("https://ai-first-web-kit.vercel.app");
-    expect(site.canonicalSummary).toContain("working example");
-    expect(site.canonicalSummary).toContain("humans");
-    expect(site.canonicalSummary).toContain("AI agents");
-    expect(site.audience).toContain("AI agents");
+describe("site content", () => {
+  it("defines the five routes in navigation order", () => {
+    expect(routes.map((route) => route.path)).toEqual(["/", "/patterns", "/interfaces", "/evidence", "/contact"]);
   });
 
-  it("defines all human routes", () => {
-    expect(routes.map((route) => route.path)).toEqual(["/", "/patterns", "/agent-guide", "/examples", "/contact"]);
+  it("gives every pattern a unique anchor and a known layer", () => {
+    const ids = patterns.map((pattern) => pattern.id);
+    const layerIds = layers.map((layer) => layer.id);
+
+    expect(new Set(ids).size).toBe(ids.length);
+    expect(patterns.every((pattern) => layerIds.includes(pattern.layer))).toBe(true);
+    for (const layer of layerIds) {
+      expect(patterns.some((pattern) => pattern.layer === layer)).toBe(true);
+    }
   });
 
-  it("defines agent tasks and machine-readable assets", () => {
-    expect(agentTasks).toEqual([
-      "Summarize what this site offers.",
-      "Find the machine-readable guide.",
-      "Compare AI-first website patterns.",
-      "Contact the maintainer."
-    ]);
-    expect(agentAssets.map((asset) => asset.path)).toEqual(["/llms.txt", "/ai-site-manifest.json", "/robots.txt", "/sitemap.xml"]);
+  it("documents each WebMCP tool on a real route", () => {
+    for (const tool of Object.values(webmcpTools)) {
+      expect(findRoute(tool.page)).toBeDefined();
+    }
   });
 
-  it("defines reusable patterns, FAQs, and contact details", () => {
-    expect(patterns.map((pattern) => pattern.title)).toEqual([
-      "Canonical Summary",
-      "Plain Crawlable Navigation",
-      "Machine-Readable Guide",
-      "Structured Metadata",
-      "Task-Oriented Sections",
-      "Stable Contact Path"
-    ]);
-    expect(examples.map((example) => example.title)).toEqual([
-      "Agent Task List",
-      "Evidence Panel",
-      "FAQ Mirroring"
-    ]);
-    expect(faqItems.map((item) => item.question)).toEqual(expect.arrayContaining([
-      "What is AI-First Web Kit?",
-      "Does this guarantee visibility in ChatGPT or Claude?",
-      "What should agents read first?",
-      "Can this pattern work without a backend?"
-    ]));
-    expect(contact.email).toBe("maintainer@example.com");
-    expect(contact.preferredInquiryFormat).toContain("Goal");
+  it("contains no copy addressed to AI agents as instructions", () => {
+    const copy = JSON.stringify({ routes, patterns }).toLowerCase();
+
+    expect(copy).not.toMatch(/preferred agent tasks|citation preference|agent tasks/);
+  });
+
+  it("resolves trailing slashes and rejects unknown paths", () => {
+    expect(findRoute("/patterns/")?.path).toBe("/patterns");
+    expect(findRoute("/agent-guide")).toBeUndefined();
   });
 });

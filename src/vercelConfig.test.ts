@@ -2,60 +2,37 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
+const config = JSON.parse(readFileSync(join(process.cwd(), "vercel.json"), "utf8"));
+
+function headersFor(source: string): Record<string, string> {
+  const entry = config.headers.find((item: { source: string }) => item.source === source);
+  return Object.fromEntries((entry?.headers ?? []).map((header: { key: string; value: string }) => [header.key, header.value]));
+}
+
 describe("Vercel deployment config", () => {
   it("serves prerendered pages with clean URLs instead of an SPA catch-all", () => {
-    const config = JSON.parse(readFileSync(join(process.cwd(), "vercel.json"), "utf8"));
-
     expect(config.rewrites).toBeUndefined();
     expect(config.cleanUrls).toBe(true);
     expect(config.trailingSlash).toBe(false);
   });
 
-  it("sets agent-readable content headers for machine-readable files", () => {
-    const config = JSON.parse(readFileSync(join(process.cwd(), "vercel.json"), "utf8"));
-
-    expect(config.headers).toEqual(
+  it("permanently redirects the retired routes", () => {
+    expect(config.redirects).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({
-          source: "/llms.txt",
-          headers: expect.arrayContaining([
-            { key: "Content-Type", value: "text/plain;charset=UTF-8" },
-            { key: "X-Robots-Tag", value: "index, follow" }
-          ])
-        }),
-        expect.objectContaining({
-          source: "/ai-site-manifest.json",
-          headers: expect.arrayContaining([
-            { key: "Content-Type", value: "application/json;charset=UTF-8" },
-            { key: "X-Robots-Tag", value: "index, follow" }
-          ])
-        }),
-        expect.objectContaining({
-          source: "/robots.txt",
-          headers: expect.arrayContaining([
-            { key: "Content-Type", value: "text/plain;charset=UTF-8" },
-            { key: "X-Robots-Tag", value: "index, follow" }
-          ])
-        }),
-        expect.objectContaining({
-          source: "/sitemap.xml",
-          headers: expect.arrayContaining([
-            { key: "Content-Type", value: "application/xml;charset=UTF-8" },
-            { key: "X-Robots-Tag", value: "index, follow" }
-          ])
-        })
+        { source: "/agent-guide", destination: "/interfaces", permanent: true },
+        { source: "/examples", destination: "/patterns", permanent: true }
       ])
     );
   });
 
-  it("does not configure noindex, noai, or noimageai directives for agent assets", () => {
-    const config = JSON.parse(readFileSync(join(process.cwd(), "vercel.json"), "utf8"));
-    const restrictedPaths = new Set(["/llms.txt", "/ai-site-manifest.json", "/robots.txt", "/sitemap.xml"]);
-    const restrictedHeaders = config.headers.filter((entry: { source: string }) => restrictedPaths.has(entry.source));
-    const headerText = JSON.stringify(restrictedHeaders).toLowerCase();
+  it.each([
+    ["/llms.txt", "text/plain;charset=UTF-8"],
+    ["/robots.txt", "text/plain;charset=UTF-8"],
+    ["/sitemap.xml", "application/xml;charset=UTF-8"]
+  ])("serves %s as %s without noindex or noai", (source, contentType) => {
+    const headers = headersFor(source);
 
-    expect(headerText).not.toContain("noindex");
-    expect(headerText).not.toContain("noai");
-    expect(headerText).not.toContain("noimageai");
+    expect(headers["Content-Type"]).toBe(contentType);
+    expect(JSON.stringify(headers).toLowerCase()).not.toMatch(/noindex|noai|noimageai/);
   });
 });

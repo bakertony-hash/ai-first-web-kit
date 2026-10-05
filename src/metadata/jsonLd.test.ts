@@ -1,53 +1,43 @@
 import { describe, expect, it } from "vitest";
-import { contact, faqItems, site } from "../content/siteContent";
-import { allJsonLd, buildFaqJsonLd, buildHowToJsonLd, buildOrganizationJsonLd, buildWebsiteJsonLd } from "./jsonLd";
+import { faqItems, findRoute, routes, site } from "../content/siteContent";
+import { jsonLdFor } from "./jsonLd";
 
-describe("JSON-LD builders", () => {
-  it("builds WebSite JSON-LD from canonical site facts", () => {
-    const jsonLd = buildWebsiteJsonLd();
-    expect(jsonLd["@context"]).toBe("https://schema.org");
-    expect(jsonLd["@type"]).toBe("WebSite");
-    expect(jsonLd.name).toBe(site.name);
-    expect(jsonLd.url).toBe(site.url);
-    expect(jsonLd.description).toBe(site.canonicalSummary);
-    expect(jsonLd.inLanguage).toBe("en");
+function types(path: string) {
+  return jsonLdFor(findRoute(path))["@graph"].map((node) => node["@type"]);
+}
+
+describe("JSON-LD", () => {
+  it.each(routes.map((route) => [route.path, route.pageType] as const))(
+    "describes %s as WebSite, Organization and %s",
+    (path, pageType) => {
+      expect(types(path).slice(0, 3)).toEqual(["WebSite", "Organization", pageType]);
+    }
+  );
+
+  it("adds the FAQ to the home page and breadcrumbs to subpages", () => {
+    expect(types("/")).toContain("FAQPage");
+    expect(types("/patterns")).toContain("BreadcrumbList");
+    expect(types("/patterns")).not.toContain("FAQPage");
   });
 
-  it("builds Organization JSON-LD with contact point", () => {
-    const jsonLd = buildOrganizationJsonLd();
-    expect(jsonLd["@context"]).toBe("https://schema.org");
-    expect(jsonLd["@type"]).toBe("Organization");
-    expect(jsonLd.name).toBe(site.ownerName);
-    expect(jsonLd.url).toBe(site.url);
-    expect(jsonLd.contactPoint["@type"]).toBe("ContactPoint");
-    expect(jsonLd.contactPoint.contactType).toBe("maintainer");
-    expect(jsonLd.contactPoint.email).toBe(contact.email);
-    expect(jsonLd.contactPoint.description).toBe(contact.preferredInquiryFormat);
+  it("uses the visible FAQ answers", () => {
+    const faq = jsonLdFor(findRoute("/"))["@graph"].find((node) => node["@type"] === "FAQPage") as unknown as {
+      mainEntity: { name: string; acceptedAnswer: { text: string } }[];
+    };
+
+    expect(faq.mainEntity.map((entry) => [entry.name, entry.acceptedAnswer.text])).toEqual(
+      faqItems.map((item) => [item.question, item.answer])
+    );
   });
 
-  it("builds FAQPage JSON-LD from visible FAQ items", () => {
-    const jsonLd = buildFaqJsonLd();
-    expect(jsonLd["@context"]).toBe("https://schema.org");
-    expect(jsonLd["@type"]).toBe("FAQPage");
-    expect(jsonLd.mainEntity.every((entry) => entry["@type"] === "Question")).toBe(true);
-    expect(jsonLd.mainEntity.map((entry) => entry.name)).toEqual(faqItems.map((item) => item.question));
-    expect(jsonLd.mainEntity.every((entry) => entry.acceptedAnswer["@type"] === "Answer")).toBe(true);
-    expect(jsonLd.mainEntity.map((entry) => entry.acceptedAnswer.text)).toEqual(faqItems.map((item) => item.answer));
+  it("points the contact point at GitHub issues instead of a placeholder email", () => {
+    const json = JSON.stringify(jsonLdFor(findRoute("/contact")));
+
+    expect(json).toContain(`${site.repoUrl}/issues`);
+    expect(json).not.toContain("example.com");
   });
 
-  it("builds HowTo JSON-LD for AI-first site consumption", () => {
-    const jsonLd = buildHowToJsonLd();
-    expect(jsonLd["@context"]).toBe("https://schema.org");
-    expect(jsonLd["@type"]).toBe("HowTo");
-    expect(jsonLd.step.map((step) => step.name)).toEqual([
-      "Read the canonical summary",
-      "Open the agent guide",
-      "Use structured assets",
-      "Cite stable pages"
-    ]);
-  });
-
-  it("builds all JSON-LD entries in stable order", () => {
-    expect(allJsonLd().map((item) => item["@type"])).toEqual(["WebSite", "Organization", "FAQPage", "HowTo"]);
+  it("describes only the site on the not-found page", () => {
+    expect(types("/nope")).toEqual(["WebSite", "Organization"]);
   });
 });

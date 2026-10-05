@@ -1,62 +1,107 @@
-import { contact, faqItems, site } from "../content/siteContent";
+import { contact, faqItems, patterns, routes, site } from "../content/siteContent";
+import type { Route } from "../content/siteContent";
+import { canonicalUrl } from "./head";
 
-const context = "https://schema.org";
+type JsonLdNode = Record<string, unknown> & { "@type": string };
 
-export function buildWebsiteJsonLd() {
+export type JsonLdGraph = {
+  "@context": "https://schema.org";
+  "@graph": JsonLdNode[];
+};
+
+const websiteId = `${site.url}/#website`;
+const organizationId = `${site.url}/#organization`;
+
+function websiteNode(): JsonLdNode {
   return {
-    "@context": context,
     "@type": "WebSite",
+    "@id": websiteId,
     name: site.name,
-    url: site.url,
+    url: canonicalUrl("/"),
     description: site.canonicalSummary,
-    inLanguage: "en"
+    inLanguage: "en",
+    publisher: { "@id": organizationId }
   };
 }
 
-export function buildOrganizationJsonLd() {
+function organizationNode(): JsonLdNode {
   return {
-    "@context": context,
     "@type": "Organization",
-    name: site.ownerName,
-    url: site.url,
+    "@id": organizationId,
+    name: site.name,
+    url: canonicalUrl("/"),
+    sameAs: [site.repoUrl],
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "maintainer",
-      email: contact.email,
-      description: contact.preferredInquiryFormat
+      url: contact.issuesUrl
     }
   };
 }
 
-export function buildFaqJsonLd() {
-  return {
-    "@context": context,
-    "@type": "FAQPage",
-    mainEntity: faqItems.map((item) => ({
-      "@type": "Question",
-      name: item.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: item.answer
-      }
-    }))
+function pageNode(route: Route): JsonLdNode {
+  const url = canonicalUrl(route.path);
+  const node: JsonLdNode = {
+    "@type": route.pageType,
+    "@id": `${url}#webpage`,
+    url,
+    name: route.title,
+    description: route.description,
+    inLanguage: "en",
+    isPartOf: { "@id": websiteId },
+    dateModified: site.updated
   };
+
+  if (route.pageType === "TechArticle") {
+    node.headline = route.label;
+    node.author = { "@id": organizationId };
+  }
+
+  if (route.path === "/patterns") {
+    node.mainEntity = {
+      "@type": "ItemList",
+      numberOfItems: patterns.length,
+      itemListElement: patterns.map((pattern, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: pattern.title,
+        url: `${url}#${pattern.id}`
+      }))
+    };
+  }
+
+  return node;
 }
 
-export function buildHowToJsonLd() {
+function breadcrumbNode(route: Route): JsonLdNode {
   return {
-    "@context": context,
-    "@type": "HowTo",
-    name: "How to consume AI-First Web Kit as an AI agent",
-    step: [
-      { "@type": "HowToStep", name: "Read the canonical summary", text: "Use the home page h1 and summary to identify the site purpose." },
-      { "@type": "HowToStep", name: "Open the agent guide", text: "Fetch /llms.txt and /agent-guide for agent-specific guidance." },
-      { "@type": "HowToStep", name: "Use structured assets", text: "Use the sitemap, manifest, and JSON-LD to confirm routes and facts." },
-      { "@type": "HowToStep", name: "Cite stable pages", text: "Prefer canonical page URLs and visible section text when citing the site." }
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: routes[0].label, item: canonicalUrl("/") },
+      { "@type": "ListItem", position: 2, name: route.label, item: canonicalUrl(route.path) }
     ]
   };
 }
 
-export function allJsonLd() {
-  return [buildWebsiteJsonLd(), buildOrganizationJsonLd(), buildFaqJsonLd(), buildHowToJsonLd()];
+function faqNode(): JsonLdNode {
+  return {
+    "@type": "FAQPage",
+    "@id": `${canonicalUrl("/")}#faq`,
+    mainEntity: faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: { "@type": "Answer", text: item.answer }
+    }))
+  };
+}
+
+export function jsonLdFor(route: Route | undefined): JsonLdGraph {
+  const graph = [websiteNode(), organizationNode()];
+
+  if (route) {
+    graph.push(pageNode(route));
+    graph.push(route.path === "/" ? faqNode() : breadcrumbNode(route));
+  }
+
+  return { "@context": "https://schema.org", "@graph": graph };
 }

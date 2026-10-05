@@ -19,3 +19,4 @@ export function renderRoute(pathname: string): RenderedPage {
 
 export const routePaths = routes.map((route) => route.path);
 export const notFoundPath = notFoundRoute.path;
+export { buildLlmsTxt, buildSitemap } from "./agent/publicFiles";

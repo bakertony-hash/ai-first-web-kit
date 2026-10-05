@@ -1,15 +1,15 @@
 import type { ComponentType } from "react";
 import type { RoutePath } from "../content/siteContent";
-import { AgentGuidePage } from "./AgentGuidePage";
 import { ContactPage } from "./ContactPage";
-import { ExamplesPage } from "./ExamplesPage";
+import { EvidencePage } from "./EvidencePage";
 import { HomePage } from "./HomePage";
+import { InterfacesPage } from "./InterfacesPage";
 import { PatternsPage } from "./PatternsPage";
 
 export const pageComponents: Record<RoutePath, ComponentType> = {
   "/": HomePage,
   "/patterns": PatternsPage,
-  "/agent-guide": AgentGuidePage,
-  "/examples": ExamplesPage,
+  "/interfaces": InterfacesPage,
+  "/evidence": EvidencePage,
   "/contact": ContactPage
 };

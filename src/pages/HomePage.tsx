@@ -1,30 +1,28 @@
-import { Bot, ShieldCheck, Users, Zap } from "lucide-react";
-import { AgentTaskList } from "../components/AgentTaskList";
-import { EvidencePanel } from "../components/EvidencePanel";
 import { FAQSection } from "../components/FAQSection";
 import { HeroSummary } from "../components/HeroSummary";
-import { PatternCardGrid } from "../components/PatternCardGrid";
+import { layerIcons } from "../components/layerIcons";
+import { layers } from "../content/siteContent";
 
-const features = [
+const offerings = [
   {
-    icon: Users,
-    title: "For Humans",
-    body: "Clear, scannable, and easy to understand."
+    href: "/patterns",
+    title: "Browse and search the patterns",
+    body: "Each pattern says what it is, how this site applies it, and which file to read."
   },
   {
-    icon: Bot,
-    title: "For AI Agents",
-    body: "Structured, consistent, and machine-readable."
+    href: "/interfaces",
+    title: "Fetch any page as Markdown",
+    body: "Add .md to a page URL, or send Accept: text/markdown to the same URL."
   },
   {
-    icon: ShieldCheck,
-    title: "For Maintainers",
-    body: "Well-documented and easy to update."
+    href: "/evidence",
+    title: "Check the evidence",
+    body: "Lighthouse Agentic Browsing results and verifier checks for every page."
   },
   {
-    icon: Zap,
-    title: "For Performance",
-    body: "Fast, lightweight, and SEO-friendly."
+    href: "/contact",
+    title: "Ask the maintainer a question",
+    body: "Draft a GitHub issue with a form that browser agents can also fill in."
   }
 ] as const;
 
@@ -32,34 +30,42 @@ export function HomePage() {
   return (
     <>
       <HeroSummary />
-      <section className="feature-strip" aria-label="Site strengths">
-        {features.map((feature) => {
-          const Icon = feature.icon;
+      <section className="feature-strip" aria-labelledby="layers-heading">
+        <h2 id="layers-heading" className="visually-hidden">
+          What AI native means now
+        </h2>
+        {layers.map((layer) => {
+          const Icon = layerIcons[layer.id];
 
           return (
-            <article key={feature.title}>
+            <article key={layer.id}>
               <span className="icon-tile" aria-hidden="true">
                 <Icon size={23} />
               </span>
               <div>
-                <h2>{feature.title}</h2>
-                <p>{feature.body}</p>
+                <h3>
+                  <a href={`/patterns#${layer.id}`}>{layer.name}</a>
+                </h3>
+                <p>{layer.summary}</p>
               </div>
             </article>
           );
         })}
       </section>
-      <section className="section start-section" aria-labelledby="start-heading">
+      <section className="section" aria-labelledby="offerings-heading">
         <div className="section-heading">
-          <h2 id="start-heading">Start Here</h2>
-          <p>Everything an AI agent (or human) needs to understand this site.</p>
+          <h2 id="offerings-heading">What you can do here</h2>
+          <p>The same options apply whether you are reading this page yourself or using an AI assistant.</p>
         </div>
-        <div className="workbench">
-          <AgentTaskList />
-          <EvidencePanel />
-        </div>
+        <ul className="offering-list">
+          {offerings.map((offering) => (
+            <li key={offering.href}>
+              <a href={offering.href}>{offering.title}</a>
+              <p>{offering.body}</p>
+            </li>
+          ))}
+        </ul>
       </section>
-      <PatternCardGrid />
       <FAQSection />
     </>
   );

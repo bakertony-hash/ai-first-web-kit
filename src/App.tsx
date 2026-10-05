@@ -1,6 +1,6 @@
 import { Shell } from "./components/Shell";
 import { findRoute } from "./content/siteContent";
-import { allJsonLd } from "./metadata/jsonLd";
+import { jsonLdFor } from "./metadata/jsonLd";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { pageComponents } from "./pages/routeTable";
 
@@ -10,13 +10,10 @@ export default function App({ pathname }: { pathname: string }) {
 
   return (
     <>
-      {allJsonLd().map((item) => (
-        <script
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(item) }}
-          key={item["@type"]}
-          type="application/ld+json"
-        />
-      ))}
+      <script
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdFor(route)).replace(/</g, "\\u003c") }}
+        type="application/ld+json"
+      />
       <Shell pathname={route?.path}>
         <Page />
       </Shell>
