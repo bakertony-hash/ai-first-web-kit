@@ -8,7 +8,6 @@
 // (146+); older builds skip those audits.
 import * as chromeLauncher from "chrome-launcher";
 import lighthouse from "lighthouse";
-import { execFileSync } from "node:child_process";
 import { writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -24,7 +23,9 @@ async function pagePaths() {
 }
 
 const chrome = await chromeLauncher.launch({ chromeFlags });
-const chromeVersion = execFileSync(chrome.process.spawnfile, ["--version"], { encoding: "utf8" }).trim();
+// Ask the running browser rather than spawning `chrome --version`: on Windows that
+// hands off to an open Chrome window instead of printing a version.
+const { Browser: chromeVersion } = await (await fetch(`http://127.0.0.1:${chrome.port}/json/version`)).json();
 const pages = [];
 const webmcpTools = [];
 let lighthouseVersion = "";
