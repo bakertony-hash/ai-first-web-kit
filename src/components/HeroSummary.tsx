@@ -11,7 +11,7 @@ export function HeroSummary() {
         </p>
         <h1 id="hero-heading">{site.name}</h1>
         <p className="hero-lede">{site.canonicalSummary}</p>
-        <div className="hero-actions" aria-label="Primary actions">
+        <div className="hero-actions">
           <a className="button button-primary" href="/agent-guide">
             <BookOpen aria-hidden="true" size={18} />
             Read the Guide

@@ -31,8 +31,24 @@
   box-sizing: border-box;
 }
 
-.js-enabled .static-fallback {
-  display: none;
+@view-transition {
+  navigation: auto;
+}
+
+.skip-link {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 10;
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: var(--bg);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
 }
 
 html {
@@ -124,7 +140,6 @@ header {
 }
 
 .brand-mark,
-.theme-indicator,
 .icon-tile {
   display: inline-flex;
   align-items: center;
@@ -142,15 +157,6 @@ header {
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
-}
-
-.theme-indicator {
-  width: 1.7rem;
-  height: 1.7rem;
-  border-color: rgb(255 255 255 / 12%);
-  border-radius: 50%;
-  color: var(--muted);
-  box-shadow: none;
 }
 
 nav {

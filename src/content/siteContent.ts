@@ -9,12 +9,58 @@ export const site = {
 } as const;
 
 export const routes = [
-  { path: "/", label: "Overview", description: "Canonical summary, agent tasks, evidence, and key patterns." },
-  { path: "/patterns", label: "Patterns", description: "AI-first website design patterns with examples." },
-  { path: "/agent-guide", label: "Agent Guide", description: "Plain-language guidance for AI agents consuming this site." },
-  { path: "/examples", label: "Examples", description: "Concrete examples of metadata, routes, and task-oriented copy." },
-  { path: "/contact", label: "Contact", description: "Contact details and preferred inquiry format." }
+  {
+    path: "/",
+    label: "Overview",
+    title: "AI-First Web Kit",
+    description: "Canonical summary, agent tasks, evidence, and key patterns."
+  },
+  {
+    path: "/patterns",
+    label: "Patterns",
+    title: "Patterns | AI-First Web Kit",
+    description: "AI-first website design patterns with examples."
+  },
+  {
+    path: "/agent-guide",
+    label: "Agent Guide",
+    title: "Agent Guide | AI-First Web Kit",
+    description: "Plain-language guidance for AI agents consuming this site."
+  },
+  {
+    path: "/examples",
+    label: "Examples",
+    title: "Examples | AI-First Web Kit",
+    description: "Concrete examples of metadata, routes, and task-oriented copy."
+  },
+  {
+    path: "/contact",
+    label: "Contact",
+    title: "Contact | AI-First Web Kit",
+    description: "Contact details and preferred inquiry format."
+  }
 ] as const;
+
+export type Route = (typeof routes)[number];
+export type RoutePath = Route["path"];
+
+export const notFoundRoute = {
+  path: "/404",
+  label: "Not Found",
+  title: "Page Not Found | AI-First Web Kit",
+  description: "The requested page is not part of the AI-First Web Kit example."
+} as const;
+
+export type PageMeta = Route | typeof notFoundRoute;
+
+export function normalizePath(pathname: string): string {
+  return pathname === "/" ? pathname : pathname.replace(/\/+$/, "") || "/";
+}
+
+export function findRoute(pathname: string): Route | undefined {
+  const path = normalizePath(pathname);
+  return routes.find((route) => route.path === path);
+}
 
 export const agentTasks = [
   "Summarize what this site offers.",

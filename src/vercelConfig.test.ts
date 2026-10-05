@@ -3,13 +3,12 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 describe("Vercel deployment config", () => {
-  it("rewrites app routes to index.html for direct links", () => {
+  it("serves prerendered pages with clean URLs instead of an SPA catch-all", () => {
     const config = JSON.parse(readFileSync(join(process.cwd(), "vercel.json"), "utf8"));
 
-    expect(config.rewrites).toContainEqual({
-      source: "/((?!api|.*\\..*).*)",
-      destination: "/index.html"
-    });
+    expect(config.rewrites).toBeUndefined();
+    expect(config.cleanUrls).toBe(true);
+    expect(config.trailingSlash).toBe(false);
   });
 
   it("sets agent-readable content headers for machine-readable files", () => {
