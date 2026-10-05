@@ -29,5 +29,10 @@ export function renderHead(page: PageMeta, isNotFound = false): string {
     );
   }
 
+  const originTrialToken = import.meta.env.VITE_WEBMCP_OT_TOKEN;
+  if (originTrialToken) {
+    tags.push(`<meta http-equiv="origin-trial" content="${escapeHtml(originTrialToken)}" />`);
+  }
+
   return tags.join("\n    ");
 }

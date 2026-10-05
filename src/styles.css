@@ -747,3 +747,71 @@ code {
   font-size: 0.9em;
 }
 
+
+.tool-panel form {
+  display: grid;
+  gap: 0.9rem;
+  max-width: 40rem;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.form-row input {
+  flex: 1 1 14rem;
+}
+
+.form-field {
+  display: grid;
+  gap: 0.35rem;
+}
+
+label {
+  font-weight: 600;
+}
+
+input,
+textarea {
+  min-height: 2.9rem;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--surface-strong);
+  color: var(--ink);
+  font: inherit;
+}
+
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+button.button {
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+form:tool-form-active {
+  outline: 2px dashed var(--accent);
+  outline-offset: 0.5rem;
+}
+
+.search-results {
+  min-height: 1.6rem;
+  margin-top: 0.9rem;
+}
+
+.search-results ul {
+  display: block;
+  padding-left: 1.2rem;
+  list-style: disc;
+}
+
+.tool-panel h2 {
+  margin-bottom: 0.9rem;
+}

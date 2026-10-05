@@ -1,4 +1,5 @@
 import { PatternList } from "../components/PatternList";
+import { PatternSearch } from "../components/PatternSearch";
 import { SourceLinks } from "../components/SourceLinks";
 import { retiredPatterns, watching } from "../content/siteContent";
 
@@ -12,6 +13,7 @@ export function PatternsPage() {
           this site that implements it.
         </p>
       </section>
+      <PatternSearch />
       <PatternList />
       <section className="section" aria-labelledby="retired-heading" id="retired">
         <div className="section-heading">

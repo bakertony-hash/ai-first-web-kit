@@ -1,3 +1,4 @@
+import { ContactForm } from "../components/ContactForm";
 import { contact } from "../content/siteContent";
 
 export function ContactPage() {
@@ -10,6 +11,7 @@ export function ContactPage() {
           <a href={contact.issuesUrl}>browse existing issues</a>.
         </p>
       </section>
+      <ContactForm />
     </div>
   );
 }
