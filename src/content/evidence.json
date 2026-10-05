@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-10-05T04:29:57.263Z",
-  "targetUrl": "http://127.0.0.1:4173",
+  "generatedAt": "2026-10-05T04:52:26.156Z",
+  "targetUrl": "https://ai-first-web-kit.vercel.app",
   "lighthouseVersion": "13.5.0",
-  "chromeVersion": "Google Chrome for Testing 154.0.8037.92",
+  "chromeVersion": "Opening in existing browser session.",
   "chromeFlags": [
     "--headless=new",
     "--no-sandbox",
