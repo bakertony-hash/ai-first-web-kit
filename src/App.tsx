@@ -1,80 +1,21 @@
-import { useEffect, useState } from "react";
-import type { ReactNode } from "react";
 import { Shell } from "./components/Shell";
-import { allJsonLd } from "./metadata/jsonLd";
-import { AgentGuidePage } from "./pages/AgentGuidePage";
-import { ContactPage } from "./pages/ContactPage";
-import { ExamplesPage } from "./pages/ExamplesPage";
-import { HomePage } from "./pages/HomePage";
+import { findRoute } from "./content/siteContent";
+import { jsonLdFor } from "./metadata/jsonLd";
 import { NotFoundPage } from "./pages/NotFoundPage";
-import { PatternsPage } from "./pages/PatternsPage";
+import { pageComponents } from "./pages/routeTable";
 
-function normalizePath(pathname: string) {
-  if (pathname === "/") {
-    return pathname;
-  }
-
-  return pathname.replace(/\/+$/, "");
-}
-
-function getPage(pathname: string): ReactNode {
-  switch (normalizePath(pathname)) {
-    case "/":
-      return <HomePage />;
-    case "/patterns":
-      return <PatternsPage />;
-    case "/agent-guide":
-      return <AgentGuidePage />;
-    case "/examples":
-      return <ExamplesPage />;
-    case "/contact":
-      return <ContactPage />;
-    default:
-      return <NotFoundPage />;
-  }
-}
-
-export default function App() {
-  const [pathname, setPathname] = useState(() => window.location.pathname);
-
-  useEffect(() => {
-    function handlePopState() {
-      setPathname(window.location.pathname);
-    }
-
-    window.addEventListener("popstate", handlePopState);
-    return () => window.removeEventListener("popstate", handlePopState);
-  }, []);
-
-  function handleNavigate(path: string) {
-    const nextPath = normalizePath(path);
-    if (nextPath !== normalizePath(window.location.pathname)) {
-      window.history.pushState({}, "", nextPath);
-    }
-
-    setPathname(nextPath);
-    if (window.navigator.userAgent.includes("jsdom")) {
-      return;
-    }
-
-    try {
-      window.scrollTo({ top: 0 });
-    } catch {
-      // Some non-browser test environments expose scrollTo without implementing it.
-    }
-  }
+export default function App({ pathname }: { pathname: string }) {
+  const route = findRoute(pathname);
+  const Page = route ? pageComponents[route.path] : NotFoundPage;
 
   return (
     <>
-      {allJsonLd().map((item) => (
-        <script
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(item) }}
-          key={item["@type"]}
-          type="application/ld+json"
-        />
-      ))}
-      <Shell onNavigate={handleNavigate} pathname={normalizePath(pathname)}>
-        {getPage(pathname)}
+      <script
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdFor(route)).replace(/</g, "\\u003c") }}
+        type="application/ld+json"
+      />
+      <Shell pathname={route?.path}>
+        <Page />
       </Shell>
     </>
   );

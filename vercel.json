@@ -1,6 +1,17 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "trailingSlash": false,
   "headers": [
+    {
+      "source": "/(.*)\\.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown;charset=UTF-8"
+        }
+      ]
+    },
     {
       "source": "/llms.txt",
       "headers": [
@@ -15,11 +26,11 @@
       ]
     },
     {
-      "source": "/ai-site-manifest.json",
+      "source": "/llms-full.txt",
       "headers": [
         {
           "key": "Content-Type",
-          "value": "application/json;charset=UTF-8"
+          "value": "text/plain;charset=UTF-8"
         },
         {
           "key": "X-Robots-Tag",
@@ -54,10 +65,26 @@
       ]
     }
   ],
-  "rewrites": [
+  "redirects": [
     {
-      "source": "/((?!api|.*\\..*).*)",
-      "destination": "/index.html"
+      "source": "/agent-guide",
+      "destination": "/interfaces",
+      "permanent": true
+    },
+    {
+      "source": "/agent-guide.md",
+      "destination": "/interfaces.md",
+      "permanent": true
+    },
+    {
+      "source": "/examples",
+      "destination": "/patterns",
+      "permanent": true
+    },
+    {
+      "source": "/examples.md",
+      "destination": "/patterns.md",
+      "permanent": true
     }
   ]
 }

@@ -1,0 +1,302 @@
+{
+  "generatedAt": "2026-10-05T04:29:57.263Z",
+  "targetUrl": "http://127.0.0.1:4173",
+  "lighthouseVersion": "13.5.0",
+  "chromeVersion": "Google Chrome for Testing 154.0.8037.92",
+  "chromeFlags": [
+    "--headless=new",
+    "--no-sandbox",
+    "--enable-features=WebMCPTesting,DevToolsWebMCPSupport"
+  ],
+  "pages": [
+    {
+      "path": "/",
+      "audits": [
+        {
+          "id": "agent-accessibility-tree",
+          "title": "Accessibility tree is well-formed",
+          "score": 1,
+          "scoreDisplayMode": "binary",
+          "displayValue": "All audits passed"
+        },
+        {
+          "id": "webmcp-form-coverage",
+          "title": "WebMCP form coverage",
+          "score": null,
+          "scoreDisplayMode": "notApplicable",
+          "displayValue": ""
+        },
+        {
+          "id": "webmcp-registered-tools",
+          "title": "WebMCP tools registered",
+          "score": 1,
+          "scoreDisplayMode": "informative",
+          "displayValue": ""
+        },
+        {
+          "id": "webmcp-schema-validity",
+          "title": "WebMCP schemas are valid",
+          "score": null,
+          "scoreDisplayMode": "notApplicable",
+          "displayValue": ""
+        },
+        {
+          "id": "cumulative-layout-shift",
+          "title": "Cumulative Layout Shift",
+          "score": 1,
+          "scoreDisplayMode": "numeric",
+          "displayValue": "0"
+        },
+        {
+          "id": "llms-txt",
+          "title": "llms.txt follows recommendations",
+          "score": 1,
+          "scoreDisplayMode": "binary",
+          "displayValue": ""
+        },
+        {
+          "id": "ard-schema",
+          "title": "`ai-catalog.json` schema is valid",
+          "score": null,
+          "scoreDisplayMode": "notApplicable",
+          "displayValue": ""
+        }
+      ]
+    },
+    {
+      "path": "/patterns",
+      "audits": [
+        {
+          "id": "agent-accessibility-tree",
+          "title": "Accessibility tree is well-formed",
+          "score": 1,
+          "scoreDisplayMode": "binary",
+          "displayValue": "All audits passed"
+        },
+        {
+          "id": "webmcp-form-coverage",
+          "title": "WebMCP form coverage",
+          "score": 1,
+          "scoreDisplayMode": "binary",
+          "displayValue": ""
+        },
+        {
+          "id": "webmcp-registered-tools",
+          "title": "WebMCP tools registered",
+          "score": 1,
+          "scoreDisplayMode": "informative",
+          "displayValue": ""
+        },
+        {
+          "id": "webmcp-schema-validity",
+          "title": "WebMCP schemas are valid",
+          "score": 1,
+          "scoreDisplayMode": "binary",
+          "displayValue": ""
+        },
+        {
+          "id": "cumulative-layout-shift",
+          "title": "Cumulative Layout Shift",
+          "score": 1,
+          "scoreDisplayMode": "numeric",
+          "displayValue": "0"
+        },
+        {
+          "id": "llms-txt",
+          "title": "llms.txt follows recommendations",
+          "score": 1,
+          "scoreDisplayMode": "binary",
+          "displayValue": ""
+        },
+        {
+          "id": "ard-schema",
+          "title": "`ai-catalog.json` schema is valid",
+          "score": null,
+          "scoreDisplayMode": "notApplicable",
+          "displayValue": ""
+        }
+      ]
+    },
+    {
+      "path": "/interfaces",
+      "audits": [
+        {
+          "id": "agent-accessibility-tree",
+          "title": "Accessibility tree is well-formed",
+          "score": 1,
+          "scoreDisplayMode": "binary",
+          "displayValue": "All audits passed"
+        },
+        {
+          "id": "webmcp-form-coverage",
+          "title": "WebMCP form coverage",
+          "score": null,
+          "scoreDisplayMode": "notApplicable",
+          "displayValue": ""
+        },
+        {
+          "id": "webmcp-registered-tools",
+          "title": "WebMCP tools registered",
+          "score": 1,
+          "scoreDisplayMode": "informative",
+          "displayValue": ""
+        },
+        {
+          "id": "webmcp-schema-validity",
+          "title": "WebMCP schemas are valid",
+          "score": null,
+          "scoreDisplayMode": "notApplicable",
+          "displayValue": ""
+        },
+        {
+          "id": "cumulative-layout-shift",
+          "title": "Cumulative Layout Shift",
+          "score": 1,
+          "scoreDisplayMode": "numeric",
+          "displayValue": "0"
+        },
+        {
+          "id": "llms-txt",
+          "title": "llms.txt follows recommendations",
+          "score": 1,
+          "scoreDisplayMode": "binary",
+          "displayValue": ""
+        },
+        {
+          "id": "ard-schema",
+          "title": "`ai-catalog.json` schema is valid",
+          "score": null,
+          "scoreDisplayMode": "notApplicable",
+          "displayValue": ""
+        }
+      ]
+    },
+    {
+      "path": "/evidence",
+      "audits": [
+        {
+          "id": "agent-accessibility-tree",
+          "title": "Accessibility tree is well-formed",
+          "score": 1,
+          "scoreDisplayMode": "binary",
+          "displayValue": "All audits passed"
+        },
+        {
+          "id": "webmcp-form-coverage",
+          "title": "WebMCP form coverage",
+          "score": null,
+          "scoreDisplayMode": "notApplicable",
+          "displayValue": ""
+        },
+        {
+          "id": "webmcp-registered-tools",
+          "title": "WebMCP tools registered",
+          "score": 1,
+          "scoreDisplayMode": "informative",
+          "displayValue": ""
+        },
+        {
+          "id": "webmcp-schema-validity",
+          "title": "WebMCP schemas are valid",
+          "score": null,
+          "scoreDisplayMode": "notApplicable",
+          "displayValue": ""
+        },
+        {
+          "id": "cumulative-layout-shift",
+          "title": "Cumulative Layout Shift",
+          "score": 1,
+          "scoreDisplayMode": "numeric",
+          "displayValue": "0"
+        },
+        {
+          "id": "llms-txt",
+          "title": "llms.txt follows recommendations",
+          "score": 1,
+          "scoreDisplayMode": "binary",
+          "displayValue": ""
+        },
+        {
+          "id": "ard-schema",
+          "title": "`ai-catalog.json` schema is valid",
+          "score": null,
+          "scoreDisplayMode": "notApplicable",
+          "displayValue": ""
+        }
+      ]
+    },
+    {
+      "path": "/contact",
+      "audits": [
+        {
+          "id": "agent-accessibility-tree",
+          "title": "Accessibility tree is well-formed",
+          "score": 1,
+          "scoreDisplayMode": "binary",
+          "displayValue": "All audits passed"
+        },
+        {
+          "id": "webmcp-form-coverage",
+          "title": "WebMCP form coverage",
+          "score": 1,
+          "scoreDisplayMode": "binary",
+          "displayValue": ""
+        },
+        {
+          "id": "webmcp-registered-tools",
+          "title": "WebMCP tools registered",
+          "score": 1,
+          "scoreDisplayMode": "informative",
+          "displayValue": ""
+        },
+        {
+          "id": "webmcp-schema-validity",
+          "title": "WebMCP schemas are valid",
+          "score": 1,
+          "scoreDisplayMode": "binary",
+          "displayValue": ""
+        },
+        {
+          "id": "cumulative-layout-shift",
+          "title": "Cumulative Layout Shift",
+          "score": 1,
+          "scoreDisplayMode": "numeric",
+          "displayValue": "0"
+        },
+        {
+          "id": "llms-txt",
+          "title": "llms.txt follows recommendations",
+          "score": 1,
+          "scoreDisplayMode": "binary",
+          "displayValue": ""
+        },
+        {
+          "id": "ard-schema",
+          "title": "`ai-catalog.json` schema is valid",
+          "score": null,
+          "scoreDisplayMode": "notApplicable",
+          "displayValue": ""
+        }
+      ]
+    }
+  ],
+  "webmcpTools": [
+    {
+      "page": "/patterns",
+      "name": "search_patterns",
+      "description": "Search the AI-native website patterns on this site by keyword. Returns the matching patterns with their layer, summary and URL.",
+      "kind": "Declarative Tools"
+    },
+    {
+      "page": "/contact",
+      "name": "contact_maintainer",
+      "description": "Draft a GitHub issue to the maintainer of this site. It opens a prefilled issue that the user reviews and submits; nothing is sent automatically.",
+      "kind": "Declarative Tools"
+    }
+  ],
+  "verifier": {
+    "passed": 79,
+    "total": 79,
+    "failures": []
+  }
+}

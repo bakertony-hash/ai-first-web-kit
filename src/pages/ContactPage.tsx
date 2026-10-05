@@ -1,13 +1,17 @@
-import { ContactPanel } from "../components/ContactPanel";
+import { ContactForm } from "../components/ContactForm";
+import { contact } from "../content/siteContent";
 
 export function ContactPage() {
   return (
     <div className="subpage">
       <section className="subpage-intro" aria-labelledby="contact-heading">
         <h1 id="contact-heading">Contact</h1>
-        <p>Use this route when an agent or human needs a stable maintainer contact path.</p>
+        <p>
+          Questions and reports go to the maintainer as GitHub issues. You can also{" "}
+          <a href={contact.issuesUrl}>browse existing issues</a>.
+        </p>
       </section>
-      <ContactPanel />
+      <ContactForm />
     </div>
   );
 }

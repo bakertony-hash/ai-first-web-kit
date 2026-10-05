@@ -49,11 +49,9 @@ describe("page layout styles", () => {
 
     expect(css).toContain(".subpage {");
     expect(css).toContain(".subpage-intro {");
-    expect(css).toContain(".page-panel {");
     expect(css).toContain(".hero {");
     expect(css).toContain(".signal-map {");
     expect(css).toContain(".feature-strip {");
-    expect(css).toContain(".workbench {");
     expect(css).toContain(".pattern-card {");
     expect(css).toContain(".faq-list {");
     expect(css).not.toContain("main > section article");
