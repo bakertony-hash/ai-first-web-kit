@@ -18,6 +18,7 @@ jobs:
       - run: npm run build
       - name: Verify the built site as browsers and agents see it
         run: |
-          npx vite preview --port 4173 --strictPort &
+          npm run preview -- --port 4173 --strictPort &
           for attempt in $(seq 1 30); do curl -sf http://127.0.0.1:4173/ > /dev/null && break; sleep 1; done
+          curl -sf http://127.0.0.1:4173/ > /dev/null || { echo "vite preview did not start on 127.0.0.1:4173"; exit 1; }
           AGENT_READABILITY_BASE_URL=http://127.0.0.1:4173 npm run verify:agent-readability
