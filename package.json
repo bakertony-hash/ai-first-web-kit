@@ -9,7 +9,8 @@
     "preview": "vite preview --host 127.0.0.1",
     "test": "vitest run",
     "verify:agent-readability": "node scripts/verify-agent-readability.mjs",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "audit:agentic": "node scripts/audit-agentic.mjs"
   },
   "dependencies": {
     "@vercel/functions": "^3.9.11",
@@ -27,7 +28,9 @@
     "@types/turndown": "^5.0.6",
     "@vitejs/plugin-react": "^5.0.0",
     "axe-core": "^4.13.0",
+    "chrome-launcher": "^1.2.2",
     "jsdom": "^25.0.0",
+    "lighthouse": "^13.5.0",
     "turndown": "^7.2.4",
     "typescript": "^5.7.0",
     "vite": "^7.0.0",

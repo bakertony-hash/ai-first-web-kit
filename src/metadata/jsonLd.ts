@@ -1,3 +1,4 @@
+import { evidenceDate } from "../content/evidence";
 import { contact, faqItems, patterns, routes, site } from "../content/siteContent";
 import type { Route } from "../content/siteContent";
 import { canonicalUrl } from "./head";
@@ -49,7 +50,7 @@ function pageNode(route: Route): JsonLdNode {
     description: route.description,
     inLanguage: "en",
     isPartOf: { "@id": websiteId },
-    dateModified: site.updated
+    dateModified: route.path === "/evidence" ? evidenceDate : site.updated
   };
 
   if (route.pageType === "TechArticle") {

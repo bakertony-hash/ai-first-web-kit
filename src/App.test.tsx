@@ -41,3 +41,13 @@ test("gives each pattern a linkable anchor", () => {
   expect(container.querySelector("#server-rendered-routes h3")).toHaveTextContent("Server-rendered HTML on every route");
   expect(screen.getByRole("heading", { level: 2, name: "Retired patterns" })).toBeInTheDocument();
 });
+
+test("publishes the recorded audit for every page, including outcomes that didn't pass", () => {
+  renderAt("/evidence");
+
+  for (const path of ["/", "/patterns", "/interfaces", "/evidence", "/contact"]) {
+    expect(screen.getByRole("heading", { level: 3, name: new RegExp(`^${path} ?: \\d+ of \\d+ scored audits passed$`) })).toBeInTheDocument();
+  }
+  expect(screen.getAllByText("Not applicable").length).toBeGreaterThan(0);
+  expect(screen.getByText(/checks passed$/)).toBeInTheDocument();
+});
